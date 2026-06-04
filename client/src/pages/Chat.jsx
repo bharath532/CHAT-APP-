@@ -4,9 +4,11 @@ import { useAuth } from '../context/AuthContext';
 import Sidebar from '../components/Sidebar.jsx';
 import ChatWindow from '../components/ChatWindow.jsx';
 import Loader from '../components/Loader.jsx';
+import { Link } from 'react-router-dom';
 
 export default function Chat() {
   const { user, token } = useAuth();
+  const { logout } = useAuth();
 
   const [activeUser, setActiveUser] = React.useState(null);
   const [messages, setMessages] = React.useState([]);
@@ -38,7 +40,27 @@ export default function Chat() {
   if (!user) return <Loader />;
 
   return (
+
+
     <div className="container-fluid py-3">
+
+      <div className="d-flex justify-content-between align-items-center mb-3">
+        <h4>Chat App</h4>
+
+        <div className="d-flex gap-2">
+          <Link to="/profile" className="btn btn-outline-primary">
+            Profile
+          </Link>
+
+
+          <button
+            className="btn btn-outline-danger"
+            onClick={logout}
+          >
+            Logout
+          </button>
+        </div>
+      </div>
       <div className="row g-3 align-items-stretch">
         <div className="col-12 col-xl-4 col-lg-4">
           <Sidebar
@@ -48,6 +70,8 @@ export default function Chat() {
             activeUserId={activeUser?.id}
           />
         </div>
+
+
 
         <div className="col-12 col-xl-8 col-lg-8">
           <ChatWindow

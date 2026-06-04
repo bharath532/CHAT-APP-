@@ -1,9 +1,10 @@
 const initSocketHandlers = require('./handlers');
 const events = require('./events');
 const jwt = require('jsonwebtoken');
+const User = require('../models/User');
 
 function initSocket(io) {
-  io.on('connection', (socket) => {
+  io.on('connection',async (socket) => {
     const { token } = socket.handshake.auth || {};
 
     // Verify JWT at socket connection for correctness
@@ -14,6 +15,9 @@ function initSocket(io) {
         if (userId) {
           socket.data.userId = userId;
           socket.join(`user:${userId}`);
+          await User.findByIdAndUpdate(userId, {
+            onlineStatus: 'online'
+          });
           socket.data.tokenVerified = true;
 
           // Notify others that this user is online (best effort)
@@ -24,10 +28,13 @@ function initSocket(io) {
       }
     }
 
-    socket.on('disconnect', () => {
+    socket.on('disconnect', async () => {
       const userId = socket.data.userId;
       if (!userId) return;
-
+      
+      await User.findByIdAndUpdate(userId, {
+        onlineStatus: 'offline'
+      });
       io.emit(events.USER_OFFLINE, { userId });
     });
 

@@ -1,0 +1,12 @@
+- [ ] Scaffold backend (server/package.json, server.js, configs, models)
+- [ ] Implement auth: register/login + JWT middleware
+- [ ] Implement user APIs: profile view/edit + profile image upload
+- [ ] Implement message APIs: history + read receipts
+- [ ] Implement Socket.IO: online/offline, typing indicator, delivery + read receipts
+- [ ] Scaffold frontend (client/package.json, Vite, React Router)
+- [ ] Implement auth UI: Login/Register, protected routes
+- [ ] Implement chat UI: sidebar user list + chat window, message bubbles
+- [ ] Implement profile page + edit profile + image upload
+- [ ] Integrate Axios services + Socket.IO client
+- [ ] Implement dark/light mode + Bootstrap 5 styling + responsive layout
+- [ ] Add production-ready README: installation + deployment guide
